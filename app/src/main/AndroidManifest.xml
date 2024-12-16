@@ -13,6 +13,15 @@
         android:theme="@style/Theme.TeleMedicine"
         tools:targetApi="31">
         <activity
+            android:name=".PatientActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DiseaseDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".MedicinesActivity"
             android:exported="false" />
         <activity
