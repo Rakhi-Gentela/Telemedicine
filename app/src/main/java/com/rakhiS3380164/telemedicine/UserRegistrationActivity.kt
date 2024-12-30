@@ -250,11 +250,15 @@ fun UserRegistrationActivityScreen() {
                             patientFN.isBlank() -> {
                                 errorMessage = "Please enter your full name."
                             }
-
+                            isValidUsername(patientFN) ->{
+                                errorMessage = "Invalid username"
+                            }
                             patientEmail.isBlank() -> {
                                 errorMessage = "Please enter your email."
                             }
-
+                            isValidEmail(patientEmail) -> {
+                                errorMessage = "Invalid email"
+                            }
                             patientPass.isBlank() -> {
                                 errorMessage = "Please enter your password."
                             }
@@ -280,7 +284,8 @@ fun UserRegistrationActivityScreen() {
                                     patientAge = patientAge,
                                     patientPass = patientPass,
                                 )
-                                savePatientData(patientData, context)
+                                patientAlreadyRegistered(patientData,context)
+//                                savePatientData(patientData, context)
                             }
 
                         }
@@ -330,6 +335,17 @@ fun UserRegistrationActivityScreen() {
     }
 }
 
+fun isValidUsername(username: String): Boolean {
+    val regex = "^[a-zA-Z]*$".toRegex() // Matches only alphabets, excluding spaces and other characters
+    return !regex.matches(username)
+}
+
+
+fun isValidEmail(email: String): Boolean {
+    val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$".toRegex()
+    return !emailRegex.matches(email)
+}
+
 @Preview(showBackground = true)
 @Composable
 fun UserRegistrationActivityPreview() {
@@ -357,7 +373,7 @@ private fun saveDataToFirebase(
     onSuccess: () -> Unit,
     onFailure: (String) -> Unit
 ) {
-    val ref = FirebaseDatabase.getInstance().getReference("Travellers")
+    val ref = FirebaseDatabase.getInstance().getReference("Patients")
     ref.child(path).setValue(data)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -378,4 +394,27 @@ private fun showToast(context: Context, message: String) {
 private fun navigateToAccessActivity(context: Activity) {
     context.startActivity(Intent(context, AccessActivity::class.java))
     context.finish()
+}
+
+private fun patientAlreadyRegistered(patientData1: PatientData, context: Activity) {
+    val db = FirebaseDatabase.getInstance()
+    val sanitizedUid = patientData1.patientEmail.replace(".", ",")
+    val ref = db.getReference("Patients").child(sanitizedUid)
+
+    ref.get().addOnCompleteListener { task ->
+        if (task.isSuccessful) {
+            val patientData = task.result?.getValue(PatientData::class.java)
+            if (patientData != null) {
+                Toast.makeText(context, "Patient already exists", Toast.LENGTH_SHORT).show()
+            } else {
+                savePatientData(patientData1,context)
+            }
+        } else {
+            Toast.makeText(
+                context,
+                "Failed to retrieve user data: ${task.exception?.message}",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
 }

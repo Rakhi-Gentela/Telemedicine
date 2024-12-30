@@ -272,7 +272,7 @@ private fun fetchPatientDataFromDatabase(
     onFailure: () -> Unit
 ) {
     val databaseReference = FirebaseDatabase.getInstance().reference
-    databaseReference.child("Travellers").child(email).get()
+    databaseReference.child("Patients").child(email).get()
         .addOnSuccessListener { snapshot ->
             val patientData = snapshot.getValue(PatientData::class.java)
             if (patientData != null) onSuccess(patientData) else onFailure()
