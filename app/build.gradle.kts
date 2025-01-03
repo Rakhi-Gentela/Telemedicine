@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.rakhiS3380164.telemedicine"
+    namespace = "com.telemedicine.S3380164rakhi"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.rakhiS3380164.telemedicine"
+        applicationId = "com.telemedicine.S3380164rakhi"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
