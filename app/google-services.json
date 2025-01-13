@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:781414337496:android:37c616e8f8fe5d97f000ad",
+        "mobilesdk_app_id": "1:781414337496:android:8bed61f42feb7059f000ad",
         "android_client_info": {
-          "package_name": "com.telemedicine.S3380164rakhi"
+          "package_name": "rakhi.teessideS3380164.telemedicineapp"
         }
       },
       "oauth_client": [],

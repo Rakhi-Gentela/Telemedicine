@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.telemedicine.S3380164rakhi"
+    namespace = "rakhi.teessideS3380164.telemedicineapp"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.telemedicine.S3380164rakhi"
+        applicationId = "rakhi.teessideS3380164.telemedicineapp"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -76,4 +76,9 @@ dependencies {
 
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
     implementation("com.google.firebase:firebase-analytics")
+
+    implementation("androidx.compose.material:material:1.5.1")
+
+    implementation("androidx.biometric:biometric:1.4.0-alpha02")
+
 }
